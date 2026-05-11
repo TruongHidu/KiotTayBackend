@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\OwnerUserController;
 use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\RestaurantController;
 use App\Http\Controllers\Admin\SubscriptionController;
+use App\Http\Controllers\Api\PublicMenu\PublicMenuController;
 use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,10 @@ use Illuminate\Support\Facades\Route;
 // ── Public ─────────────────────────────────────────────────────────────────
 Route::prefix('auth')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+});
+
+Route::prefix('public')->name('public.')->group(function () {
+    Route::get('/menus/{token}', [PublicMenuController::class, 'show'])->name('menus.show');
 });
 
 // ── Authenticated ───────────────────────────────────────────────────────────
