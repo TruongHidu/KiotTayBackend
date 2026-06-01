@@ -10,17 +10,17 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Broadcasting\Channel;
 
-class OrderItemsAdded implements ShouldBroadcastNow
+class OrderItemRemoved implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * @param Order $order
-     * @param list<\App\DTOs\PlaceOrderItemDTO> $newItems
+     * @param array $removedItemData Dữ liệu của OrderItem vừa bị xóa
      */
     public function __construct(
         public Order $order,
-        public array $newItems,
+        public array $removedItemData,
     ) {}
 
     public function broadcastOn(): Channel
@@ -30,6 +30,6 @@ class OrderItemsAdded implements ShouldBroadcastNow
 
     public function broadcastAs(): string
     {
-        return 'OrderItemsAdded';
+        return 'OrderItemRemoved';
     }
 }

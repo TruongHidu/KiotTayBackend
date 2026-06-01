@@ -3,6 +3,7 @@
 namespace App\Events;
 
 use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
@@ -10,17 +11,17 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Broadcasting\Channel;
 
-class OrderItemsAdded implements ShouldBroadcastNow
+class OrderItemUpdated implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * @param Order $order
-     * @param list<\App\DTOs\PlaceOrderItemDTO> $newItems
+     * @param OrderItem $orderItem Dữ liệu của OrderItem vừa được cập nhật
      */
     public function __construct(
         public Order $order,
-        public array $newItems,
+        public OrderItem $orderItem,
     ) {}
 
     public function broadcastOn(): Channel
@@ -30,6 +31,6 @@ class OrderItemsAdded implements ShouldBroadcastNow
 
     public function broadcastAs(): string
     {
-        return 'OrderItemsAdded';
+        return 'OrderItemUpdated';
     }
 }
